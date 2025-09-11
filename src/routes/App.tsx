@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "@routes/pages/homepage/homepage";
 import About from "@routes/pages/about/About";
 import Projects from "@routes/pages/projects/Projects";
-import Awards from "@routes/pages/awards/Awards";
+import Awards from "@routes/pages/awards/Awards.tsx";
 import { ThemeProvider } from "@context/ThemeContext";
 import { GlobalStyles } from "@globalStyles/globalStyles";
 import { useAppSelector } from "@context/reducer/store";
