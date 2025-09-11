@@ -325,7 +325,7 @@ export const AwardDescription = styled.p`
     padding: 2.5rem 1.2rem 1.2rem;
     font-size: 1rem;
   }
-
+`
 // Animated versions for intersection observer
 export const AnimatedAwardsListContainer = styled(AwardsListContainer)<{ isVisible?: boolean }>`
   opacity: ${props => props.isVisible ? 1 : 0};
