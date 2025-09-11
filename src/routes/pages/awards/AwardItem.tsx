@@ -52,7 +52,7 @@ export const AwardItem: React.FC<AwardItemProps> = ({ award, index }) => {
       data-index={index} 
       $isReversed={isReversed}
       isVisible={isIntersecting}
-      delay={0.1}
+      delay={0}
     >
       <AwardImageSection>
         <AwardImageContainer>

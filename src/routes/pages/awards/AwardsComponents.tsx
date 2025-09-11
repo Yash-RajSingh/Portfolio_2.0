@@ -245,7 +245,7 @@ export const AwardImageLoader = styled.div<{ $isLoaded: boolean; $shouldAnimate:
   z-index: 3;
 
   ${props => props.$isLoaded && props.$shouldAnimate && css`
-    animation: ${imageLoaderSlideUp} 0.8s ease-out 0.5s forwards;
+    animation: ${imageLoaderSlideUp} 0.3s ease-out 0.15s forwards;
 
   `}
   transform-origin: bottom;
