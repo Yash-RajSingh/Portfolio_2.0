@@ -1,3 +1,1 @@
-export interface SkillsProps {
-
-} 
+export interface SkillsProps {}

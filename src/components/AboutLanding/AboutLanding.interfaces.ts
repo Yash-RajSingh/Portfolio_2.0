@@ -1,3 +1,1 @@
-export interface AboutLandingProps {
-
-} 
+export interface AboutLandingProps {}
