@@ -1,3 +1,1 @@
-export interface AdventuresProps {
-
-} 
+export interface AdventuresProps {}

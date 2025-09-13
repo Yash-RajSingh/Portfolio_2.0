@@ -1,3 +1,1 @@
-export interface ProjectsLandingProps {
-  
-} 
+export interface ProjectsLandingProps {}
