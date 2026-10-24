@@ -9,8 +9,8 @@ import { Stats } from "@components/stats/stats";
 import { Timeline } from "@components/timeline/timeline";
 import { Projects } from "@components/projects/projects";
 import { Wins } from "@components/wins/wins";
-import { About } from "@components/about/about";
-import { Contact } from "@components/contact/contact";
+import { About } from "@components/About/About";
+import { Contact } from "@components/Contact/Contact";
 import { PivotPanel } from "@components/pivotPanel/pivotPanel";
 import { Container, MobileBlock } from "@components/shared/sharedElements";
 
