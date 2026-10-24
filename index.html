@@ -1,16 +1,161 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio</title>
+    <title>Yash Raj Singh · Senior Software Engineer</title>
+    <meta name="description" content="Yash Raj Singh, senior software engineer in Bengaluru, builds fast, scalable web apps with React, TypeScript and micro-frontends. Projects and experience." />
+    <meta name="author" content="Yash Raj Singh" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://yash-rajsingh.netlify.app/" />
+
+    <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1a2c" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Yash Raj Singh" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:url" content="https://yash-rajsingh.netlify.app/" />
+    <meta property="og:title" content="Yash Raj Singh · Senior Software Engineer" />
+    <meta property="og:description" content="I engineer software that scales. React, TypeScript and micro-frontends, from architecture to the last pixel." />
+    <meta property="og:image" content="https://yash-rajsingh.netlify.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Yash Raj Singh, Senior Software Engineer: I engineer software that scales." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Yash Raj Singh · Senior Software Engineer" />
+    <meta name="twitter:description" content="I engineer software that scales. React, TypeScript and micro-frontends, from architecture to the last pixel." />
+    <meta name="twitter:image" content="https://yash-rajsingh.netlify.app/og-image.png" />
+    <meta name="twitter:image:alt" content="Yash Raj Singh, Senior Software Engineer: I engineer software that scales." />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Yash Raj Singh",
+        "url": "https://yash-rajsingh.netlify.app/",
+        "image": "https://yash-rajsingh.netlify.app/og-image.png",
+        "jobTitle": "Senior Software Engineer",
+        "worksFor": { "@type": "Organization", "name": "Impact Analytics" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressCountry": "IN" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Vivekananda Institute of Professional Studies, GGSIPU" },
+        "knowsAbout": ["React", "TypeScript", "JavaScript", "Micro-frontends", "Node.js", "WebSockets", "Web performance"],
+        "sameAs": ["https://github.com/Yash-RajSingh", "https://www.linkedin.com/in/yash-rajsingh"]
+      }
+    </script>
+
+    <script>
+      (function () {
+        var mode = "auto";
+        try {
+          mode = localStorage.getItem("portfolio:theme-mode") || "auto";
+        } catch (e) {}
+        var dark = mode === "dark" || (mode === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      })();
+    </script>
+
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap");
+      #preloader {
+        --bg: #f4f6fa;
+        --fg: #13203a;
+        --accent: #1f7a4d;
+        --track: #dde3ec;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: grid;
+        place-items: center;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+        transition: opacity 0.4s ease, visibility 0.4s;
+      }
+      [data-theme="dark"] #preloader {
+        --bg: #0f1a2c;
+        --fg: #e6ecf5;
+        --accent: #4fd1a0;
+        --track: #24334d;
+      }
+      #preloader.done {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #preloader .inner {
+        display: grid;
+        justify-items: center;
+        gap: 1rem;
+      }
+      #preloader .logo {
+        padding: 0.2rem 0.6rem;
+        border: 2px solid var(--accent);
+        border-radius: 0.3rem;
+        color: var(--accent);
+        font-size: 1.1rem;
+      }
+      #preloader .logo::after {
+        content: "_";
+        animation: preloader-blink 0.9s steps(1) infinite;
+      }
+      #preloader .bar {
+        position: relative;
+        width: 8rem;
+        height: 4px;
+        overflow: hidden;
+        background: var(--track);
+        border-radius: 999px;
+      }
+      #preloader .bar::after {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 40%;
+        border-radius: 999px;
+        background: var(--accent);
+        animation: preloader-slide 1.1s ease-in-out infinite;
+      }
+      @keyframes preloader-blink {
+        50% { opacity: 0; }
+      }
+      @keyframes preloader-slide {
+        from { translate: -100% 0; }
+        to { translate: 250% 0; }
+      }
     </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400..600&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
   </head>
   <body>
+    <div id="preloader" role="status" aria-label="Loading">
+      <div class="inner" aria-hidden="true">
+        <span class="logo">&lt;/&gt;</span>
+        <span class="bar"></span>
+      </div>
+    </div>
     <div id="root"></div>
-    <script type="module" src="/src/index.tsx"></script>
+    <noscript>
+      <style>#preloader { display: none; }</style>
+      <main style="max-width: 40rem; margin: 4rem auto; padding: 0 1.5rem; font-family: system-ui, sans-serif; line-height: 1.6">
+        <h1>Yash Raj Singh · Senior Software Engineer</h1>
+        <p>I build fast, scalable web applications with React, TypeScript and micro-frontends, from architecture to the last pixel. Senior Software Engineer at Impact Analytics, Bengaluru.</p>
+        <p>
+          <a href="https://github.com/Yash-RajSingh">GitHub</a> ·
+          <a href="https://www.linkedin.com/in/yash-rajsingh">LinkedIn</a> ·
+          <a href="mailto:yashraj45202@gmail.com">yashraj45202@gmail.com</a>
+        </p>
+        <p>Enable JavaScript to see projects, experience and wins.</p>
+      </main>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

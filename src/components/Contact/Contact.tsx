@@ -1,45 +1,144 @@
-import React from "react";
-import {
-  AnimatedContactContainer,
-  AnimatedContactTitle,
-  AnimatedContactDescription,
-  AnimatedContactButton,
-} from "./ContactComponents";
-import { Circles } from "@components/Common/CommonComponents";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { useEffect, useState } from "react";
+import { useInView } from "@/hooks/useInView";
+import styled from "styled-components";
+import { CONTACT, PROFILE } from "@/data/siteContent";
+import { Container, Mono, OnlyMobile } from "../shared/sharedElements";
+import { Reveal } from "../shared/reveal";
+import { mobile } from "@/styles/media";
+import { gridBackground } from "@/styles/mixins";
 
-const Contact: React.FC = () => {
-  const { elementRef, isIntersecting } = useIntersectionObserver({
-    threshold: 0.2,
-    rootMargin: "0px 0px -100px 0px",
-  });
+const Band = styled.section`
+  ${gridBackground}
+  padding: ${({ theme }) => theme.spacing(20)} 0;
 
-  const handleEmailClick = () => {
-    window.location.href =
-      "mailto:your-email@example.com?subject=Let's Collaborate!&body=Hi Yash,%0D%0A%0D%0AI'd love to discuss a potential collaboration opportunity with you.%0D%0A%0D%0ABest regards,";
-  };
+  ${mobile} {
+    padding: ${({ theme }) => theme.spacing(16)} 0;
+  }
+
+  > div > div {
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.spacing(3)};
+  }
+`;
+
+const Title = styled.h2`
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+
+  span {
+    color: ${({ theme }) => theme.colors.accent};
+    background: linear-gradient(currentColor, currentColor) left bottom / 0% 3px no-repeat;
+    padding-bottom: 0.08em;
+    transition: background-size 0.6s ease 0.9s;
+  }
+  [data-inview="true"] & span {
+    background-size: 100% 3px;
+  }
+`;
+
+const Row = styled.div`
+  text-transform: lowercase;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(5)};
+  font-family: ${({ theme }) => theme.font.mono};
+  font-size: ${({ theme }) => theme.font.size.xs};
+  color: ${({ theme }) => theme.colors.textMuted};
+
+  a:hover {
+    color: ${({ theme }) => theme.colors.text};
+  }
+`;
+
+const Copy = styled.button`
+  padding: 0.45rem 0.75rem;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 0.35rem;
+  background: ${({ theme }) => theme.colors.surface};
+  font-family: inherit;
+  color: ${({ theme }) => theme.colors.text};
+  cursor: pointer;
+
+  &::after {
+    content: " ⧉";
+    color: ${({ theme }) => theme.colors.textMuted};
+  }
+
+  ${mobile} {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+
+    &::after {
+      content: none;
+    }
+    > span:last-child {
+      color: ${({ theme }) => theme.colors.accent};
+    }
+  }
+`;
+
+const TYPE_MS = 35;
+
+function TypedPrompt({ text }: { text: string }) {
+  const [ref, inView] = useInView<HTMLSpanElement>(0.6);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const id = setInterval(() => {
+      setCount((n) => {
+        if (n >= text.length) clearInterval(id);
+        return Math.min(n + 1, text.length);
+      });
+    }, TYPE_MS);
+    return () => clearInterval(id);
+  }, [inView, text.length]);
 
   return (
-    <AnimatedContactContainer ref={elementRef} isVisible={isIntersecting}>
-      <Circles height="60%" width="50%" left="-30%" />
-      <AnimatedContactTitle isVisible={isIntersecting} delay={0.1}>
-        Let's Collaborate
-      </AnimatedContactTitle>
-      <AnimatedContactDescription isVisible={isIntersecting} delay={0.3}>
-        I'm always excited to work on innovative projects and collaborate with
-        passionate individuals. Whether you have an idea that needs bringing to
-        life, a challenging problem to solve, or just want to chat about
-        technology, I'd love to hear from you!
-      </AnimatedContactDescription>
-      <AnimatedContactButton
-        onClick={handleEmailClick}
-        isVisible={isIntersecting}
-        delay={0.5}
-      >
-        Get In Touch
-      </AnimatedContactButton>
-    </AnimatedContactContainer>
+    <Mono ref={ref} aria-label={text}>
+      <span aria-hidden>
+        {text.slice(0, count)}
+        <span style={{ visibility: "hidden" }}>{text.slice(count)}</span>
+      </span>
+    </Mono>
   );
-};
+}
 
-export default Contact;
+export function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  async function copyEmail() {
+    await navigator.clipboard.writeText(PROFILE.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  }
+
+  return (
+    <Band id={CONTACT.id}>
+      <Container>
+        <Reveal>
+          <TypedPrompt text={CONTACT.prompt} />
+          <Title>
+            {CONTACT.titleBefore} <span>{CONTACT.titleHighlight}</span>
+          </Title>
+          <Row>
+            <Copy onClick={copyEmail} aria-label={CONTACT.copyLabel}>
+              <span>{copied ? CONTACT.copied : PROFILE.email}</span>
+              <OnlyMobile>{CONTACT.copyShort}</OnlyMobile>
+            </Copy>
+            {CONTACT.links.map((l) => (
+              <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
+                {l.label}
+              </a>
+            ))}
+          </Row>
+        </Reveal>
+      </Container>
+    </Band>
+  );
+}
